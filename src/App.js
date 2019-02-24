@@ -1,27 +1,43 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, {
+  Component
+} from 'react';
 import './App.css';
+import TimeGraph from './components/timeGraph'
+
+const API_URL = "http://localhost:2000/test"
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      data: {},
+      isLoading : true
+    }
+  }
+  componentDidMount() {
+    fetch(API_URL)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("something went wrong")
+        }
+      })
+      .then(response => this.setState({
+        data: response,
+        isLoading : false
+      }))
+  }
+
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+    const reportData = this.state.data;
+    return this.state.isLoading ? null : (
+      <div className = "App" >
+        <TimeGraph data = {reportData}
+      /> 
       </div>
     );
+
   }
 }
 
