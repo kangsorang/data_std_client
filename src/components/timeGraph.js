@@ -36,21 +36,25 @@ class timeGraph extends Component {
     convertData(rawDatas) {
       rawDatas.forEach(rawData => {
         let macsn = rawData[0]
-        let reportData = rawData[1];
+        let connectionTimelineDataArr = rawData[1]
+        
         //add item to group
         this.groups.push({
           id: macsn,
           content: macsn,
           value: macsn
         })
-        reportData.forEach(data => {
+        connectionTimelineDataArr.forEach(data => {
+          let startTime = data[0]
+          let endTime = data[1]
+
           //add item
           this.timeLineItems.push({
-            start: new Date(parseInt(data + '000')),
-            //end: new Date(parseInt(data + '000') + 80000),//1분 20초를 더한다
+            start: new Date(startTime * 1000),
+            end: new Date(endTime * 1000),
             //id: macsn,
             group: macsn,
-            type: 'point'
+            //type: 'point'
           });
         })
       });
@@ -62,53 +66,6 @@ class timeGraph extends Component {
 
     componentDidMount() {
       this.convertData(this.props.data)
-      //debugger;
-      /*
-      var data = '1550879998'
-      var data2 = '1550880123'
-      this.timeLineItems.push({
-        start: new Date(parseInt(data + '000')),
-        end: new Date(parseInt(data + '000') + 115000),//1분 55초를 더한다
-        id: 1,
-        content: 'item 0',
-        group: 10,
-        //type: 'point'
-      });
-      this.timeLineItems.push({
-        start: new Date(parseInt(data2 + '000')),
-        end: new Date(parseInt(data2 + '000') + 115000),//1분 55초를 더한다
-        id: 2,
-        content: 'item 2',
-        group: 10,
-        //type: 'point'
-      });
-      this.timeLineItems.push({
-        start: new Date(parseInt(data2 + '000')),
-        end: new Date(parseInt(data2 + '000') + 115000),//1분 55초를 더한다
-        id: 3,
-        content: 'item 3',
-        group: 10,
-        //type: 'point'
-      });
-      this.groups = [
-        {
-          id: 10,
-          content: 'Group 1 - a',
-          value: 1
-          // Optional: a field 'className', 'style', 'order', [properties]
-        },
-        {
-          id: 20,
-          content: 'Group 1 - b',
-          value: 2
-          // Optional: a field 'className', 'style', 'order', [properties]
-        }
-        // more groups...
-      ];
-      this.setState({
-        isLoading : false
-      })
-      */
     }
 
     render() {
