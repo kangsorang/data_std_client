@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Timeline from 'react-visjs-timeline';
-import ReactLoading from 'react-loading';
 const options = {
     //width: '100%',
     //height: '100%',
@@ -73,21 +72,18 @@ class timeGraph extends Component {
 
     render() {
       console.log("Render loading : " + this.state.isLoading)
-      return this.state.isLoading ? 
+      return (
         <div>
-          <ReactLoading type="spinningBubbles" color="#777" height={'100%'} width={'100%'} />
-        </div> 
-      : 
-      (
-          <div>
-            Timeline Data
+          <h1>Timeline Data</h1>
+          {this.state.isLoading ? null : 
             <Timeline
-                options={options} 
-                items={this.timeLineItems}
-                groups={this.groups}
+            options={options} 
+            items={this.timeLineItems}
+            groups={this.groups}
             />
-          </div>
-        );
+          }
+        </div>
+      )
     }
   }
   
