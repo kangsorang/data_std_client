@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import Timeline from 'react-visjs-timeline';
-
+import ReactLoading from 'react-loading';
 const options = {
     //width: '100%',
     //height: '100%',
     stack: false,
-    //showMajorLabels: true,
-    //showCurrentTime: true,
+    showMajorLabels: true,
+    showCurrentTime: true,
     zoomMin: 1000000,
-    //verticalScroll: true,
+    verticalScroll: true,
+    autoResize: true,
     //type: 'background',
     format: {
       minorLabels: {
@@ -66,11 +68,17 @@ class timeGraph extends Component {
 
     componentDidMount() {
       this.convertData(this.props.data)
+      ReactDOM.findDOMNode(this).children[0].style.visibility = 'visible';
     }
 
     render() {
       console.log("Render loading : " + this.state.isLoading)
-      return this.state.isLoading ? <div>Data Loading... </div> : (
+      return this.state.isLoading ? 
+        <div>
+          <ReactLoading type="spinningBubbles" color="#777" height={'100%'} width={'100%'} />
+        </div> 
+      : 
+      (
           <div>
             Timeline Data
             <Timeline
