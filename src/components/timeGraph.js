@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Timeline from 'react-visjs-timeline';
+import {CAROUSEL1} from './../shopData'
+
 const options = {
     //width: '100%',
     //height: '100%',
     stack: false,
     showMajorLabels: true,
     showCurrentTime: true,
-    zoomMin: 1000000,
+    zoomMin: 10000000,
     verticalScroll: true,
     autoResize: true,
     //type: 'background',
@@ -18,12 +20,17 @@ const options = {
       }
     },
     groupOrder: function (a, b) {
-      return a.value - b.value;
+      let check_a = CAROUSEL1.includes(a.value[0])
+      let check_b = CAROUSEL1.includes(b.value[0])
+      if (check_a && !check_b) {
+        return true
+      }
+      return false
     },
     //editable: true
   }
-
   
+
 class timeGraph extends Component {
     constructor(input) {
       super();
@@ -34,7 +41,16 @@ class timeGraph extends Component {
       }
     }
     
+    isEmpty(obj) {
+      for(var key in obj) {
+          if(obj.hasOwnProperty(key))
+              return false;
+      }
+      return true;
+    }
+
     convertData(rawDatas) {
+      if (this.isEmpty(rawDatas)) return;
       rawDatas.forEach(rawData => {
         let macsn = rawData[0]
         let connectionTimelineDataArr = rawData[1]

@@ -5,7 +5,7 @@ import './App.css';
 import TimeGraph from './components/timeGraph'
 import ReactLoading from 'react-loading';
 
-const API_URL = "http://localhost:2000/test"
+const GET_DATA_API_URL = "http://localhost:2000/getData"
 
 class App extends Component {
   constructor() {
@@ -16,7 +16,7 @@ class App extends Component {
     }
   }
   componentDidMount() {
-    fetch(API_URL)
+    fetch(`${GET_DATA_API_URL}`)
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -35,18 +35,22 @@ class App extends Component {
   }
 
   render() {
-    const reportData = this.state.data;
     console.log("Loading : " + this.state.isLoading)
-    return this.state.isLoading ? 
-    <div align="center" height={'100%'}>
-          <h1>Data Loading.....</h1>
-          <ReactLoading type="spinningBubbles" color="#777" height='400px' width='400px' />
-        </div>  : (
-      <div className = "App" >
-        <TimeGraph data = {reportData}
-      /> 
-      </div>
-    );
+    return (
+      this.state.isLoading ? 
+        (
+          <div align="center" height={'100%'}>
+            <h1>Data Loading.....</h1>
+            <ReactLoading type="spinningBubbles" color="#777" height='400px' width='400px' />
+          </div>  
+        )
+        : 
+        (
+          <div>
+            <TimeGraph data = {this.state.data}></TimeGraph>
+          </div>
+        )
+    )
 
   }
 }
