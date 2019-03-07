@@ -5,7 +5,7 @@ import './App.css';
 import TimeGraph from './components/timeGraph'
 import ReactLoading from 'react-loading';
 
-const GET_DATA_API_URL = "http://localhost:2000/getData"
+const GET_DATA_API_URL = "http://localhost:2000/getReportData"
 
 class App extends Component {
   constructor() {

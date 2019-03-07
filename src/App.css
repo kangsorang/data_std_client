@@ -29,7 +29,17 @@
   }
 }
 
-#root {
-  
+#root { 
   padding-top: 20px;
+}
+
+.vis-label:nth-child(4n + 1) {
+	background-color: rgb(197, 208, 238);
+}
+.vis-label:nth-child(4n + 2) {
+	background-color: rgb(197, 208, 238);
+}
+
+.vis-group:nth-child(4n + 2) {
+	background-color: rgb(240, 221, 233);
 }
