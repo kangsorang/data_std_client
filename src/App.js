@@ -5,7 +5,8 @@ import './App.css';
 import TimeGraph from './components/timeGraph'
 import ReactLoading from 'react-loading';
 
-const GET_DATA_API_URL = "http://localhost:2000/getReportData"
+const GET_REPORT_DATA_API_URL = "http://localhost:2000/getReportData"
+const GET_IH_DATA_API_URL = "http://localhost:2000/getIHData"
 
 class App extends Component {
   constructor() {
@@ -16,7 +17,8 @@ class App extends Component {
     }
   }
   componentDidMount() {
-    fetch(`${GET_DATA_API_URL}`)
+    let reportData, ihData;
+    fetch(`${GET_REPORT_DATA_API_URL}`)
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -25,9 +27,24 @@ class App extends Component {
         }
       })
       .then(response => {
+        reportData = response
+        return fetch(`${GET_IH_DATA_API_URL}`)
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("something went wrong")
+        }
+      })
+      .then(response => {
+        ihData = response
+        return Promise.resolve();
+      })
+      .then(() => {
         setTimeout(() => {
           this.setState({
-            data: response,
+            data: reportData.concat(ihData),
             isLoading : false
           })  
         }, 1500)

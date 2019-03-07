@@ -19,14 +19,8 @@ const options = {
         hour: 'ha'
       }
     },
-    groupOrder: function (a, b) {
-      let check_a = CAROUSEL1.includes(a.value[0])
-      let check_b = CAROUSEL1.includes(b.value[0])
-      if (check_a && !check_b) {
-        return true
-      }
-      return false
-    },
+    groupOrder: 'content',
+    
     //editable: true
   }
   
@@ -71,6 +65,8 @@ class timeGraph extends Component {
             end: new Date(endTime * 1000),
             //id: macsn,
             group: macsn,
+            //content: macsn,
+            //type: 'box'
             //type: 'point'
           });
         })
